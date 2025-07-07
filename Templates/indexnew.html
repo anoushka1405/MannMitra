@@ -113,7 +113,7 @@
       const msg = userInput.value.trim();
       if (!msg) return;
 
-      // ✅ Corrected line: wrap HTML in backticks
+      // Corrected line: wrap HTML in backticks
       chatBox.innerHTML += `<div class="chat-msg user"><strong>You:</strong> ${msg}</div>`;
       chatBox.scrollTop = chatBox.scrollHeight;
       userInput.value = '';
