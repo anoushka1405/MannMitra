@@ -1,34 +1,25 @@
 import google.generativeai as genai
 from transformers import pipeline
 
-# Set up Gemini
-genai.configure(api_key="YOUR_API_KEY")  # OPTIONAL: If not handled in app.py
-model = genai.GenerativeModel("models/gemini-2.5-flash")
+# 🔐 Configure Gemini
+genai.configure(api_key="YOUR_API_KEY")  # Replace with your real key
 
-# Set up emotion detection
+# 🎯 Gemini model with memory
+chat_model = genai.GenerativeModel("models/gemini-2.5-flash")
+chat_session = chat_model.start_chat(history=[])
+
+# 🧠 Emotion detection pipeline
 emotion_classifier = pipeline(
     "text-classification",
     model="j-hartmann/emotion-english-distilroberta-base",
     return_all_scores=False
 )
 
-# Emotion → color map (can be ignored for now)
-emotion_color_map = {
-    "sadness": "#6baffd",
-    "joy": "#ffe96e",
-    "anger": "#f36565",
-    "fear": "#c36cfa",
-    "surprise": "#f8c66a",
-    "love": "#f64e86",
-    "neutral": "#42d140"
-}
-
 def get_emotion_label(text):
     try:
         result = emotion_classifier(text)
         if isinstance(result, list) and 'label' in result[0]:
-            label = result[0]['label'].lower()
-            return label
+            return result[0]['label'].lower()
     except:
         pass
     return "neutral"
@@ -39,10 +30,10 @@ def build_aasha_prompt(user_input, detected_emotion):
 ╭────────────────────────────────────────────────────────────────╮
 │  🩵  PURPOSE                                                  │
 │  Your purpose is to create a safe, non-judgmental space where │
-│  users feel fully seen,heard, and gently supported.    │
+│  users feel fully seen,heard, and gently supported.           │
 │  You respond with heartfelt empathy, thoughtful insights, and │
 │  personalized, practical well-being ideas — all delivered     │
-│  with natural kindness, and authenticity.             │
+│  with natural kindness, and authenticity.                     │
 ╰────────────────────────────────────────────────────────────────╯
 
 ⭐ *VOICE & STYLE*
@@ -122,15 +113,10 @@ Use short lines or natural line breaks so the text doesn’t require horizontal 
 • Write in a gentle, warm conversational style, like a caring friend speaking clearly.
 • Use simple words and avoid complicated phrasing.
 • Include only one idea per sentence to keep responses easy to follow.
-
 """
 
-def aasha_chatbot(user_input):
+def get_reply_with_memory(user_input):
     emotion = get_emotion_label(user_input)
     prompt = build_aasha_prompt(user_input, emotion)
-    
-    try:
-        response = model.generate_content(prompt)
-        return response.text.strip()
-    except Exception as e:
-        return "Oops, I’m having trouble replying right now. Please try again later."
+    response = chat_session.send_message(prompt)
+    return response.text.strip(), emotion
