@@ -2,9 +2,9 @@ from flask import Flask, render_template, request, jsonify
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
-from Aasha_chatbot import aasha_chatbot, get_emotion_label, build_aasha_prompt
+from Aasha_chatbot import get_emotion_label, build_aasha_prompt, get_reply_with_memory
 
-# Load API key from .env
+# Load env
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 print("🔑 Google API Key loaded is:", GOOGLE_API_KEY)
@@ -12,10 +12,8 @@ print("🔑 Google API Key loaded is:", GOOGLE_API_KEY)
 # Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
 
-# Set up Flask
 app = Flask(__name__)
 
-# ROUTES FOR EACH PAGE
 @app.route("/")
 def home():
     return render_template("indexnew.html")
@@ -43,17 +41,14 @@ def termsofuse():
 @app.route("/get", methods=["POST"])
 def chat():
     user_message = request.form["msg"]
-    emotion = get_emotion_label(user_message)
-    prompt = build_aasha_prompt(user_message, emotion)
-
     try:
-        model = genai.GenerativeModel("models/gemini-2.5-flash")
-        response = model.generate_content(prompt)
+        reply, emotion = get_reply_with_memory(user_message)
         return jsonify({
-            "reply": response.text.strip(),
+            "reply": reply,
             "emotion": emotion
         })
     except Exception as e:
+        print("Chat Error:", e)
         return jsonify({
             "reply": "Oops, I’m having trouble replying right now. Please try again later.",
             "emotion": "neutral"
@@ -61,4 +56,5 @@ def chat():
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=5050)
+
 
