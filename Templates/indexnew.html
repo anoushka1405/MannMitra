@@ -22,7 +22,6 @@
 
   <section class="hero">
     <div class="hero-content" style="max-width: 1500px;">
-      <!-- Hero Text -->
       <div class="hero-text">
         <h1 style="font-size: 50px;">Welcome to Mann Mitra</h1>
         <h2>Your Friendly Mental Health Companion</h2>
@@ -34,7 +33,6 @@
         <button class="cta-btn" onclick="document.getElementById('chat').scrollIntoView({ behavior: 'smooth' });">Chat Now</button>
       </div>
 
-      <!-- Emotion Swatches on the Side -->
       <div class="hero-board">
         <h3 style="text-align:center; padding-bottom:40px; font-size:22px">How are you feeling today?</h3>
         <div class="emotion-board">
@@ -113,10 +111,10 @@
       const msg = userInput.value.trim();
       if (!msg) return;
 
-      // Corrected line: wrap HTML in backticks
       chatBox.innerHTML += `<div class="chat-msg user"><strong>You:</strong> ${msg}</div>`;
       chatBox.scrollTop = chatBox.scrollHeight;
       userInput.value = '';
+      
 
       const typingIndicator = document.getElementById('typing-indicator');
       typingIndicator.style.display = 'block';
@@ -130,13 +128,17 @@
         });
 
         const data = await res.json();
-
         typingIndicator.style.display = 'none';
 
         chatBox.innerHTML += `<div class="chat-msg bot"><strong>Aasha:</strong> ${data.reply}</div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
 
         updateChatboxEmotionColor(data.emotion || "neutral");
+
+        if (data.exit_intent) {
+          userInput.placeholder = "You can keep chatting if you’d like.";
+        }
+
       } catch (error) {
         typingIndicator.style.display = 'none';
         chatBox.innerHTML += `<div class="chat-msg bot"><strong>Aasha:</strong> Oops! Something went wrong.</div>`;
