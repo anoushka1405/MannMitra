@@ -2,8 +2,7 @@ from flask import Flask, render_template, request, jsonify, session
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
-from Aasha_chatbot import first_message, continue_convo, get_emotion_label
-
+from Aasha_chatbot import first_message, continue_convo, get_emotion_label, is_exit_intent
 
 # Load env
 load_dotenv()
@@ -44,29 +43,35 @@ def termsofuse():
 def chat():
     user_message = request.form["msg"]
     emotion = get_emotion_label(user_message)
+    exit_intent = is_exit_intent(user_message)
 
     try:
-        # Detect if this is the first message in the chat
         if "chat_started" not in session:
             session["chat_started"] = True
             reply = first_message(user_message)
         else:
-            reply = continue_convo(user_message)
+            if exit_intent:
+                reply = "I'm really glad we talked today. Thank you for visiting <strong>Mann Mitra</strong> Please take care 💙"
+            else:
+                reply = continue_convo(user_message)
 
         return jsonify({
             "reply": reply,
-            "emotion": emotion
+            "emotion": emotion,
+            "exit_intent": exit_intent
         })
 
     except Exception as e:
         print("💥 Error:", e)
         return jsonify({
             "reply": "Oops, I’m having trouble replying right now. Please try again later.",
-            "emotion": "neutral"
+            "emotion": "neutral",
+            "exit_intent": False
         })
-
+    
 if __name__ == "__main__":
-    app.run(debug=True, host="127.0.0.1", port=5050)
+    app.run(debug=True, host="127.0.0.1", port=5050) 
+
 
 
 
