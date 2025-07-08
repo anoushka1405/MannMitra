@@ -1,22 +1,28 @@
 import google.generativeai as genai
 from transformers import pipeline
 import random
+import json
 
-# Configure Gemini
+# 🔐 Configure Gemini
 genai.configure(api_key="YOUR_API_KEY")  # Replace with your real key
 
-# Gemini model with memory
+# 🎯 Gemini model with memory
 model = genai.GenerativeModel("models/gemini-2.5-flash")
 aasha_session = model.start_chat(history=[])
 
-# Emotion detection pipeline
+
+# 🧠 Emotion detection pipeline
 emotion_classifier = pipeline(
     "text-classification",
     model="j-hartmann/emotion-english-distilroberta-base",
     top_k=1
 )
 
-# Emotion-specific content
+# 📚 Load FAQ data
+with open("faq.json", "r") as f:
+    faq_data = json.load(f)
+
+# 🎨 Emotion-specific content
 emotion_responses = {
     "sadness": {
         "reflection": "That sounds incredibly heavy — I’m really sorry you're carrying this.",
@@ -76,7 +82,15 @@ emotion_responses = {
     }
 }
 
-# Emotion label detector
+def match_faq(user_input):
+    user_input_clean = user_input.lower().strip()
+    for entry in faq_data:
+        for question in entry["questions"]:
+            if question in user_input_clean:
+                return entry["answer"]
+    return None 
+
+# 🧠 Emotion label detector
 def get_emotion_label(text):
     try:
         result = emotion_classifier(text)
@@ -101,8 +115,12 @@ def get_emotion_label(text):
     return "neutral"
 
 
-# First interaction with Aasha
+# 🌱 First interaction with Aasha
 def first_message(user_input):
+    faq_reply = match_faq(user_input)
+    if faq_reply:
+        return faq_reply
+    
     emotion = get_emotion_label(user_input)
     response = emotion_responses.get(emotion, emotion_responses["neutral"])
     reflection = response["reflection"]
@@ -137,8 +155,12 @@ If you feel like talking more, I’m here.
         print("Gemini error in first_message:", e)
         return "I’m here with you, but I’m having a little trouble responding right now."
 
-# Ongoing conversation with memory
+# 🔁 Ongoing conversation with memory
 def continue_convo(user_input):
+    faq_reply = match_faq(user_input)
+    if faq_reply:
+        return faq_reply
+    
     followup_prompt = f"""
 You are Aasha — an emotionally intelligent AI companion who remembers past conversations and emotions.
 
@@ -166,7 +188,7 @@ Reply as Aasha only — no markdown, no formatting. Your voice is tender, calm, 
         print("Gemini error in continue_convo:", e)
         return "Hmm, something got tangled in my thoughts. Can we try that again?"
 
-# CLI test mode
+# 🧪 CLI test mode
 if __name__ == "__main__":
     print("Hi, I’m Aasha. What’s on your mind today?")
     user_input = input("You: ")
@@ -175,6 +197,28 @@ if __name__ == "__main__":
     while True:
         user_input = input("You: ")
         if user_input.lower() in ["bye", "exit", "quit"]:
-            print("Aasha: I'm really glad we talked today. Please take care 💙")
+            print("Aasha: I'm really glad we talked today Please take care 💙")
             break
         print("Aasha:", continue_convo(user_input))
+
+# Intent classifier (can be expanded or fine-tuned in the future)
+intent_classifier = pipeline("text-classification", model="bhadresh-savani/bert-base-uncased-emotion", top_k=1)
+
+def is_exit_intent(user_input):
+    try:
+        lowered = user_input.lower()
+        generic_exit_phrases = [
+            "bye", "goodbye", "see you", "talk to you later", "exit", "quit",
+            "thanks, that’s all", "i have to go", "okay bye", "cya", "ttyl", "done chatting"
+        ]
+        if any(phrase in lowered for phrase in generic_exit_phrases):
+            return True
+
+        # Basic intent classification (can be replaced with more accurate model)
+        intent_result = intent_classifier(user_input)
+        if isinstance(intent_result, list) and "label" in intent_result[0]:
+            label = intent_result[0]['label'].lower()
+            if "gratitude" in label or "goodbye" in label:
+                return True
+    except Exception as e:
+        print("Intent detection error:", e)
