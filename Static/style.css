@@ -520,3 +520,94 @@ pre {
   color: #4d4d4d;
   font-weight: 400;
 }
+/* Balloon Base */
+.balloon {
+  position: fixed;
+  bottom: -100px;
+  width: 40px;
+  height: 55px;
+  background-color: #ff6b6b;
+  border-radius: 50% 50% 45% 45%;
+  animation: floatUp 6s ease-in forwards;
+  z-index: 9999;
+  opacity: 0.95;
+  box-shadow: inset -5px -10px 10px rgba(255, 255, 255, 0.4),
+              2px 6px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1) rotate(-2deg);
+}
+
+/* Balloon Colors */
+.color1 { background: radial-gradient(circle at 30% 30%, #ff6b6b, #d94141); }
+.color2 { background: radial-gradient(circle at 30% 30%, #6bc9ff, #3498db); }
+.color3 { background: radial-gradient(circle at 30% 30%, #ffe66d, #f5c542); }
+.color4 { background: radial-gradient(circle at 30% 30%, #b08fff, #7d5fff); }
+
+/* Balloon Shine Highlight */
+.balloon::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 10px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transform: rotate(-20deg);
+  z-index: 2;
+}
+
+/* Balloon String */
+.balloon::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 2px;
+  height: 50px;
+  background: #555;
+  transform: translateX(-50%);
+  z-index: 1;
+  opacity: 0.6;
+}
+
+/* Animation Keyframes */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 0.95;
+  }
+  25% {
+    transform: translateY(-30vh) scale(1.05) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-60vh) scale(0.98) rotate(2deg);
+  }
+  75% {
+    transform: translateY(-90vh) scale(1.02) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.1) rotate(0deg);
+    opacity: 0;
+  }
+}
+/* ❤️ Heart Animation */
+.heart {
+  position: fixed;
+  bottom: -40px;
+  font-size: 32px;
+  animation-name: floatHearts;
+  animation-timing-function: ease-in;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+@keyframes floatHearts {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.4);
+    opacity: 0;
+  }
+}
