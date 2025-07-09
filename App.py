@@ -7,13 +7,14 @@ from Aasha_chatbot import first_message, continue_convo, get_emotion_label, is_e
 # Load env
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-print("🔑 Google API Key loaded is:", GOOGLE_API_KEY)
+#print("🔑 Google API Key loaded is:", GOOGLE_API_KEY)
 
 # Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
 
 app = Flask(__name__)
 app.secret_key = "aasha-is-kind"
+
 
 @app.route("/")
 def home():
@@ -42,23 +43,29 @@ def termsofuse():
 @app.route("/get", methods=["POST"])
 def chat():
     user_message = request.form["msg"]
-    emotion = get_emotion_label(user_message)
     exit_intent = is_exit_intent(user_message)
 
     try:
         if "chat_started" not in session:
             session["chat_started"] = True
-            reply = first_message(user_message)
+            reply, meta = first_message(user_message)
         else:
             if exit_intent:
-                reply = "I'm really glad we talked today. Thank you for visiting <strong>Mann Mitra</strong> Please take care 💙"
+                reply = "I'm really glad we talked today. Thank you for visiting <strong>Mann Mitra</strong>Please take care 💙"
+                return jsonify({
+                    "reply": reply,
+                    "emotion": "neutral",
+                    "exit_intent": True,
+                    "celebration_type": None
+                })
             else:
-                reply = continue_convo(user_message)
+                reply, meta = continue_convo(user_message)
 
         return jsonify({
             "reply": reply,
-            "emotion": emotion,
-            "exit_intent": exit_intent
+            "emotion": meta["emotion"],
+            "exit_intent": exit_intent,
+            "celebration_type": meta["celebration_type"]
         })
 
     except Exception as e:
@@ -66,12 +73,10 @@ def chat():
         return jsonify({
             "reply": "Oops, I’m having trouble replying right now. Please try again later.",
             "emotion": "neutral",
-            "exit_intent": False
+            "exit_intent": False,
+            "celebration_type": None
         })
-    
 if __name__ == "__main__":
-    app.run(debug=True, host="127.0.0.1", port=5050) 
-
-
+    app.run(debug=True)
 
 
