@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mann Mitra | Your Mental Health Companion</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <header>
@@ -67,7 +69,9 @@
     </div>    
     <form class="chat-input" id="chat-form">
       <input type="text" id="user-input" placeholder="Type your message..." required />
-      <button type="submit">Send</button>
+      <button type="submit" id="send-button" title="Send Message">
+        <i class="fas fa-paper-plane"></i>
+      </button>
     </form>
   </section>
 
@@ -75,6 +79,7 @@
     const chatForm = document.getElementById('chat-form');
     const chatBox = document.getElementById('chat-box');
     const userInput = document.getElementById('user-input');
+    const typingIndicator = document.getElementById('typing-indicator');
 
     const emotionResponses = {
       joy: "I'm truly happy with you — moments like this are precious.",
@@ -106,17 +111,51 @@
       document.getElementById("kindness-quote").textContent = quote;
     });
 
+    function appendMessage(sender, message) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('chat-msg');
+      messageDiv.classList.add(sender === 'user' ? 'user' : 'bot');
+      messageDiv.innerHTML = `<strong>${sender === 'user' ? 'You' : 'Aasha'}:</strong> ${message}`;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function triggerCelebrationAnimation() {
+      const colors = ['color1', 'color2', 'color3', 'color4'];
+      for (let i = 0; i < 25; i++) {
+        const balloon = document.createElement("div");
+        balloon.classList.add("balloon");
+        balloon.classList.add(colors[Math.floor(Math.random() * colors.length)]);
+        balloon.style.left = Math.random() * 100 + "vw";
+        balloon.style.animationDuration = 3 + Math.random() * 3 + "s";
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 7000);
+      }
+    }
+
+    function triggerConfetti() {
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+    }
+
+    function triggerHearts() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.textContent = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+
     chatForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = userInput.value.trim();
       if (!msg) return;
 
-      chatBox.innerHTML += `<div class="chat-msg user"><strong>You:</strong> ${msg}</div>`;
-      chatBox.scrollTop = chatBox.scrollHeight;
+      appendMessage('user', msg);
       userInput.value = '';
-      
-
-      const typingIndicator = document.getElementById('typing-indicator');
       typingIndicator.style.display = 'block';
       chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -129,9 +168,15 @@
 
         const data = await res.json();
         typingIndicator.style.display = 'none';
+        appendMessage('aasha', data.reply);
 
-        chatBox.innerHTML += `<div class="chat-msg bot"><strong>Aasha:</strong> ${data.reply}</div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
+        if (data.celebration_type === "balloons") {
+          triggerCelebrationAnimation();
+        } else if (data.celebration_type === "confetti") {
+          triggerConfetti();
+        } else if (data.celebration_type === "hearts") {
+          triggerHearts();
+        }
 
         updateChatboxEmotionColor(data.emotion || "neutral");
 
@@ -141,7 +186,7 @@
 
       } catch (error) {
         typingIndicator.style.display = 'none';
-        chatBox.innerHTML += `<div class="chat-msg bot"><strong>Aasha:</strong> Oops! Something went wrong.</div>`;
+        appendMessage('aasha', "Oops! Something went wrong.");
       }
     });
 
