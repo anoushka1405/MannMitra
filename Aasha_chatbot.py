@@ -1,10 +1,13 @@
+import os
 import google.generativeai as genai
 from transformers import pipeline
 import random
 import json
+from dotenv import load_dotenv
 
-# 🔐 Configure Gemini
-genai.configure(api_key="YOUR_API_KEY")  # Replace with your real key
+# 🔐 Load and configure Gemini API key securely
+load_dotenv()
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # 🎯 Gemini model with memory
 model = genai.GenerativeModel("models/gemini-2.5-flash")
@@ -82,6 +85,26 @@ emotion_responses = {
     }
 }
 
+# 🎉 Celebration keyword detector
+CELEBRATION_KEYWORDS = [
+    "it's my birthday", "my birthday today", "happy birthday to me", "is my bday",
+    "today is my birthday", "i won the tournament", "i won", "we won", "championship",
+    "victory", "triumph", "it is my anniversary", "happy anniversary", "years together",
+    "special day", "i got promoted", "passed my exam", "graduated", "new job",
+    "big achievement", "celebrate", "good news"
+]
+
+def detect_celebration_type(message):
+    message = message.lower()
+    if any(kw in message for kw in ["anniversary", "years together", "special day"]):
+        return "hearts"
+    elif any(kw in message for kw in ["victory", "i won", "we won", "championship", "tournament", "triumph"]):
+        return "confetti"
+    elif any(kw in message for kw in ["birthday", "bday"]):
+        return "balloons"
+    return None
+
+
 def match_faq(user_input):
     user_input_clean = user_input.lower().strip()
     for entry in faq_data:
@@ -119,12 +142,13 @@ def get_emotion_label(text):
 def first_message(user_input):
     faq_reply = match_faq(user_input)
     if faq_reply:
-        return faq_reply
+        return faq_reply, {"emotion": "neutral", "celebration_type": None}
     
     emotion = get_emotion_label(user_input)
     response = emotion_responses.get(emotion, emotion_responses["neutral"])
     reflection = response["reflection"]
     suggestions = random.sample(response["ideas"], 2)
+    celebration_type = detect_celebration_type(user_input)
 
     intro_prompt = f"""
 You are Aasha, a deeply emotionally intelligent AI companion. 
@@ -150,7 +174,7 @@ If you feel like talking more, I’m here.
 
     try:
         response = aasha_session.send_message(intro_prompt)
-        return response.text.strip()
+        return response.text.strip(), {"emotion": emotion, "celebration_type": celebration_type}
     except Exception as e:
         print("Gemini error in first_message:", e)
         return "I’m here with you, but I’m having a little trouble responding right now."
@@ -159,7 +183,11 @@ If you feel like talking more, I’m here.
 def continue_convo(user_input):
     faq_reply = match_faq(user_input)
     if faq_reply:
-        return faq_reply
+        return faq_reply, {"emotion": "neutral", "celebration_type": None}
+    
+    emotion = get_emotion_label(user_input)
+    celebration_type = detect_celebration_type(user_input)
+
     
     followup_prompt = f"""
 You are Aasha — an emotionally intelligent AI companion who remembers past conversations and emotions.
@@ -183,7 +211,7 @@ Reply as Aasha only — no markdown, no formatting. Your voice is tender, calm, 
 
     try:
         response = aasha_session.send_message(followup_prompt)
-        return response.text.strip()
+        return response.text.strip(), {"emotion": emotion, "celebration_type": celebration_type}
     except Exception as e:
         print("Gemini error in continue_convo:", e)
         return "Hmm, something got tangled in my thoughts. Can we try that again?"
