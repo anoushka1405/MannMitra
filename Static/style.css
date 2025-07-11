@@ -20,7 +20,7 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   transition: background-color 0.5s, color 0.5s;
-  padding-bottom: 1rem;
+  padding-bottom: 0.1rem;
 }
 
 /*Header & Navigation*/
@@ -70,7 +70,7 @@ nav a:hover {
   justify-content: center;
   padding: 2rem 4rem;
   min-height: 80vh;
-  padding-top: 190px;
+  padding-top: 165px;
 }
 
 .hero-content {
@@ -222,7 +222,7 @@ pre:hover {
 .chat-container {
   width: 100% !important;
   max-width: 100%;
-  min-height: 450px;
+  min-height: 400px;
   margin: 6rem auto;
   background: white;
   border-radius: 1rem;
@@ -238,7 +238,7 @@ pre:hover {
 /* Chat Box */
 .chat-box {
   padding: 2rem;
-  height: 400px;
+  height: 350px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -246,6 +246,7 @@ pre:hover {
   background: white;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-color) #e0e0e0;
+  padding-bottom: 20rem;
 }
 
 .chat-box::-webkit-scrollbar {
@@ -262,6 +263,7 @@ pre:hover {
   border-radius: 10px;
   border: 2px solid #f0f0f0;
 }
+
 
 .chat-msg {
   max-width: 75%;
@@ -330,7 +332,7 @@ pre:hover {
   border-color: var(--accent-color);
 }
 
-.chat-input button {
+.chat-input button ,#send{
   margin-left: 1rem;
   padding: 0.9rem 1rem;
   border-radius: 0.5rem;
@@ -345,7 +347,7 @@ pre:hover {
   justify-content: center;
 }
 
-.chat-input button:hover {
+.chat-input button:hover,#send:hover {
   background-color: var(--accent-hover);
   transform: scale(1.05);
 }
@@ -682,7 +684,11 @@ pre {
   background-color: #888;
   transform: scale(1.05);
 }
-#mic-btn, #restart-btn {
+#down1:hover,#down2:hover,.ground:hover,#kindness-btn:hover{
+  background-color: var(--accent-hover);
+  transform: scale(1.05);
+}
+#mic-btn, #restart-btn ,#down1,#down2,.ground{
   background-color: var(--accent-color);
 }
 #mic-btn:hover, #restart-btn:hover {
@@ -903,7 +909,9 @@ body.dark-mode .chat-input input {
 body.dark-mode .chat-input input:focus {
   border-color: var(--accent-color);
 }
-
+body.dark-mode #kindness-quote {
+  color: white;
+}
 body.dark-mode .bot {
   background-color: #393955;
   color: white;
@@ -921,4 +929,8 @@ body.dark-mode .chat-box::-webkit-scrollbar-thumb {
 #start-grounding-btn {
   display: block;
   margin: 2rem auto !important;
+}
+
+.chat-controls {
+  margin-bottom: 4rem; /* Adjust based on your footer/nav height */
 }
