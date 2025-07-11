@@ -108,12 +108,13 @@
     </div>
   </section>
 
-  <button id="start-grounding-btn">🧘 Start Grounding Mode</button>
-  <button id="stop-grounding-btn" style="display:none;">❌ Stop Grounding</button>
-  
+  <div class="grounding-controls" style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;">
+    <button id="start-grounding-btn" class="ground">🧘 Start Grounding Mode</button>
+    <button id="stop-grounding-btn" style="display:none;">❌ Stop Grounding</button>
+  </div>
 
   <!-- Chat Section -->
-  <section id="chat" class="chat-container">
+  <section id="chat" class="chat-container" style="scroll-margin-top: 80px;">
     <div class="chat-box" id="chat-box">
       <div class="chat-msg bot"><strong>Aasha:</strong> Hi, I’m Aasha. What’s on your mind today?</div>
     </div>
@@ -122,16 +123,18 @@
     </div>
     <form class="chat-input" id="chat-form">
       <input type="text" id="user-input" placeholder="Type your message..." required />
-      <button type="button" onclick="startListening()">🎙</button>
-      <button type="submit">Send</button>
+      <button type="button" class="chat-btn mic-btn" onclick="startListening()" style="width:4.6rem">
+        <i class="fas fa-microphone"></i>
+      </button>
+      <button type="submit" id="send">Send</button>
     </form>
   </section>
 
   <!-- Controls -->
   <div class="chat-controls">
-    <div style="text-align:center;">
-      <label for="voiceSelect">🎤 Choose Aasha’s Voice:</label>
-      <select id="voiceSelect"></select>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+      <label for="voiceSelect" style="white-space: nowrap;">🎤 Choose Aasha’s Voice:</label>
+      <select id="voiceSelect" style="max-width: 500px; width: auto;"></select>
     </div>
 
     <div style="text-align:center; margin-top:0.5rem;">
@@ -139,10 +142,10 @@
       <label style="margin-left:1rem;"><input type="checkbox" id="ttsToggle" checked /> 🔊 Enable voice responses</label>
     </div>
 
-    <div class="button-row">
-      <button onclick="downloadChat()">📥 Download as TXT</button>
-      <button onclick="downloadChatAsPDF()">📄 Download as PDF</button>
+    <div class="button-row" style="display:flex; margin-left:5rem;">
+      <button onclick="downloadChat()" id="down2">📥 Download as TXT</button>
       <button id="restart-btn" class="restart-btn" onclick="restartChat()">🔁 Restart</button>
+      <button onclick="downloadChatAsPDF()" id="down1">📄 Download as PDF</button>
     </div>
   </div>
 
