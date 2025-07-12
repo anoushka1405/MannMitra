@@ -152,16 +152,10 @@ function populateVoiceList() {
     voiceSelect.appendChild(option);
   });
 
-  let preferredIndex = voices.findIndex(v =>
-    v.lang === "en-IN" && v.name.toLowerCase().includes("female")
-  );
+  // ✅ Set default to "Microsoft Heera"
+  let preferredIndex = voices.findIndex(v => v.name.includes("Microsoft Heera"));
 
-  if (preferredIndex === -1) {
-    preferredIndex = voices.findIndex(v =>
-      v.lang.startsWith("en") && v.name.toLowerCase().includes("female")
-    );
-  }
-
+  // If not found, fall back to first voice
   voiceSelect.value = preferredIndex !== -1 ? preferredIndex : 0;
   return true;
 }
@@ -332,4 +326,10 @@ const toggle = document.getElementById('darkModeSwitch');
     doc.text(lines, 10, 10);
     doc.save('chat.pdf');
   }
-  
+  // 🌟 Intro.js Guided Tour Logic
+  window.addEventListener('load', () => {
+    if (!localStorage.getItem('seenTutorial')) {
+      introJs().start();
+      localStorage.setItem('seenTutorial', 'true');
+    }
+  });
