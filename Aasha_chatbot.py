@@ -86,7 +86,6 @@ SHORT_REACT = {
     "surprise": ["That must’ve caught you off guard!", "Wow, I wasn’t expecting that either.", "Life’s full of little twists, isn’t it?"]
 }
 
-
 def get_emotion_label(text):
     try:
         # 🌍 Detect language
@@ -122,8 +121,7 @@ def get_emotion_label(text):
         # 🎯 Get emotion predictions from GoEmotions
         results = emotion_classifier(text)[0]
 
-
-        # 🔄 Convert GoEmotions → Core 7 categories
+        # 🔄 Convert GoEmotions → Core 7
         core_scores = {}
         for r in results:
             label = r["label"].lower()
@@ -131,7 +129,7 @@ def get_emotion_label(text):
             core = GOEMOTION_TO_CORE.get(label, "neutral")
             core_scores[core] = core_scores.get(core, 0) + score
 
-        # 🎯 Pick the top emotion
+        # 🎯 Pick top core emotion
         top_emotion = max(core_scores.items(), key=lambda x: x[1])[0]
 
         # 💖 Override to "love" if joyful text contains love-related words
@@ -146,13 +144,12 @@ def get_emotion_label(text):
         print("❌ Emotion error:", e)
         return "neutral"
 
-
 # First response
 
 def first_message(user_input):
     faq = match_faq(user_input)
     if faq:
-        return faq, {"emotion": "neutral", "celebration_type": None}
+        return faq, {"emotion": "neutral", "celebration_type":None}
 
     emotion = get_emotion_label(user_input)
     celebration = detect_celebration_type(user_input)
@@ -164,10 +161,10 @@ def first_message(user_input):
         invite = random.choice(INVITE_LINES)
         response = f"{reaction} {suggestion}. {invite}"
         return response, {"emotion": emotion, "celebration_type": celebration}
-
+    
     # For heavier emotions → use Gemini with detailed structure
     prompt = f'''
-You are Aasha, a deeply emotionally intelligent AI companion.
+You are Aasha, a deeply emotionally intelligent AI companion. 
 Speak with warmth, empathy, and clarity — like a close, thoughtful friend.
 
 This is the user's first message:
@@ -237,7 +234,6 @@ Example invitations:
     except Exception as e:
         print("Gemini error:", e)
         return "Hmm, something got tangled in my thoughts. Can we try that again?"
-
 
 # Exit detection (optional intent classifier)
 intent_classifier = pipeline("text-classification", model="bhadresh-savani/bert-base-uncased-emotion", top_k=1)
