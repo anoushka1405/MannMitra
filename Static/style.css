@@ -20,12 +20,12 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   transition: background-color 0.5s, color 0.5s;
-  padding-bottom: 1rem;
+  padding-bottom: 0.1rem;
 }
 
 /*Header & Navigation*/
 header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -43,7 +43,11 @@ header {
   color: var(--text-color);
   font-weight: 700;
 }
-
+.logo img {
+  width: 80px;
+  vertical-align: middle;
+  vertical-align: middle;
+}
 nav {
   display: flex;
   align-items: center;
@@ -70,7 +74,7 @@ nav a:hover {
   justify-content: center;
   padding: 2rem 4rem;
   min-height: 80vh;
-  padding-top: 190px;
+  padding-top: 165px;
 }
 
 .hero-content {
@@ -246,6 +250,7 @@ pre:hover {
   background: white;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-color) #e0e0e0;
+  padding-bottom: 20rem;
 }
 
 .chat-box::-webkit-scrollbar {
@@ -262,6 +267,7 @@ pre:hover {
   border-radius: 10px;
   border: 2px solid #f0f0f0;
 }
+
 
 .chat-msg {
   max-width: 75%;
@@ -330,7 +336,7 @@ pre:hover {
   border-color: var(--accent-color);
 }
 
-.chat-input button {
+.chat-input button ,#send{
   margin-left: 1rem;
   padding: 0.9rem 1rem;
   border-radius: 0.5rem;
@@ -345,7 +351,7 @@ pre:hover {
   justify-content: center;
 }
 
-.chat-input button:hover {
+.chat-input button:hover,#send:hover {
   background-color: var(--accent-hover);
   transform: scale(1.05);
 }
@@ -682,7 +688,11 @@ pre {
   background-color: #888;
   transform: scale(1.05);
 }
-#mic-btn, #restart-btn {
+#down1:hover,#down2:hover,.ground:hover,#kindness-btn:hover,#start-tutorial-btn:hover{
+  background-color: var(--accent-hover);
+  transform: scale(1.05);
+}
+#mic-btn, #restart-btn ,#down1,#down2,.ground,#start-tutorial-btn{
   background-color: var(--accent-color);
 }
 #mic-btn:hover, #restart-btn:hover {
@@ -876,7 +886,7 @@ body.dark-mode {
   --text-color: #f3f3f3;
   --accent-color: #9f85ff;
   --accent-hover: #c9b8ff;
-  --bot-color: #2e2e3e;
+  --bot-color: hsl(240, 15%, 21%);
   background-color: var(--bg-color);
   color: var(--text-color);
 }
@@ -903,7 +913,9 @@ body.dark-mode .chat-input input {
 body.dark-mode .chat-input input:focus {
   border-color: var(--accent-color);
 }
-
+body.dark-mode #kindness-quote {
+  color: white;
+}
 body.dark-mode .bot {
   background-color: #393955;
   color: white;
@@ -921,4 +933,32 @@ body.dark-mode .chat-box::-webkit-scrollbar-thumb {
 #start-grounding-btn {
   display: block;
   margin: 2rem auto !important;
+}
+
+.chat-controls {
+  margin-bottom: 4rem; /* Adjust based on your footer/nav height */
+}
+
+.introjs-tooltip {
+  max-width: 200px !important;  /* 🔽 reduce box width */
+  font-size: 14px !important;   /* 🔽 smaller text */
+  padding: 12px !important;
+}
+
+.introjs-tooltiptext {
+  line-height: 1.4;
+}
+
+.introjs-tooltipbuttons {
+  padding-top: 10px;
+}
+
+.introjs-helperNumberLayer {
+  width: 24px;
+  height: 10px;
+  font-size: 14px;
+}
+body.dark-mode .introjs-tooltip {
+  background-color: #f9f9f9 !important;
+  color: black !important;
 }
