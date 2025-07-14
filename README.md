@@ -33,7 +33,6 @@ MannMitra is an AI-powered chatbot designed to offer empathetic, supportive conv
 - 🧠 Session memory to remember past conversations  
 - ⬇ Option to download chat transcripts
 
-## 📂 Project Structure
 
 ## 📂 Project Structure
 
@@ -46,8 +45,7 @@ MannMitra/
 │   ├── css/
 │   ├── js/
 │   └── audio/
-├── ml/
-│   └── emotion_detector.py  # Emotion + translation logic
+├── aasha_chatbot.py     # Emotion + translation logic 
 ├── grounding.py          # Grounding Mode component logic
 ├── faq.json              # Predefined FAQs
 ├── requirements.txt      # Python dependencies
