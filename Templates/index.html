@@ -198,7 +198,25 @@ if (stopBtn) {
     window.hideGroundingUI();
   });
 }
-    
+
   </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem('seenTutorial')) {
+      introJs().start();
+      localStorage.setItem('seenTutorial', 'true');
+    }
+
+    const tutorialBtn = document.getElementById('start-tutorial-btn');
+    if (tutorialBtn) {
+      tutorialBtn.addEventListener('click', () => {
+        introJs().start();
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
+
