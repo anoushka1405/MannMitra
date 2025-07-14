@@ -41,9 +41,17 @@ def privacypolicy():
 def termsofuse():
     return render_template("termsofuse.html")
 
+@app.route("/set_language", methods=["POST"])
+def set_language():
+    data = request.json
+    session["lang"] = data.get("lang", "en")  # default to English
+    return jsonify({"status": "ok"})
+
+
 @app.route("/get", methods=["POST"])
 def chat():
-    user_message = request.json["msg"]  # If you switched to JSON
+    user_message = request.json["msg"]
+    preferred_lang = session.get("lang", "en")  # default to English if not set
 
     GROUNDING_KEYWORDS = [
         "panic", "overwhelmed", "can't breathe", "too much", "freaking out",
@@ -51,9 +59,8 @@ def chat():
     ]
 
     if any(word in user_message.lower() for word in GROUNDING_KEYWORDS):
-        print("🫁 Grounding mode triggered")
         return jsonify({
-            "reply": "It sounds like you're feeling overwhelmed. Let's take a moment to breathe together 💙",
+            "reply": "It sounds like you're feeling overwhelmed. Let’s take a moment to breathe 💙",
             "emotion": "fear",
             "exit_intent": False,
             "celebration_type": None,
@@ -65,10 +72,10 @@ def chat():
     try:
         if "chat_started" not in session:
             session["chat_started"] = True
-            reply, meta = first_message(user_message)
+            reply, meta = first_message(user_message, lang=preferred_lang)
         else:
             if exit_intent:
-                reply = "I'm really glad we talked today. Thank you for visiting <strong>Mann Mitra</strong>Please take care 💙"
+                reply = "I'm really glad we talked today. Thank you for visiting <strong>Mann Mitra</strong> 💙"
                 return jsonify({
                     "reply": reply,
                     "emotion": "neutral",
@@ -76,7 +83,7 @@ def chat():
                     "celebration_type": None
                 })
             else:
-                reply, meta = continue_convo(user_message)
+                reply, meta = continue_convo(user_message, lang=preferred_lang)
 
         return jsonify({
             "reply": reply,

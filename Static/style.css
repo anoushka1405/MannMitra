@@ -832,6 +832,13 @@ pre {
   }
 }
 
+#down1 {
+  margin-left: 3rem;
+}
+#down2 {
+  margin-left: 3rem;
+}
+
 /* 🌙 Dark Mode Toggle */
 .dark-mode-toggle {
   position: fixed;

@@ -145,20 +145,52 @@ function populateVoiceList() {
   if (!voices.length) return false;
 
   voiceSelect.innerHTML = "";
-  voices.forEach((voice, index) => {
+
+  // Allowed languages (lowercase)
+  const allowedLangs = ["en-in", "hi-in", "en-us", "en-gb", "en-au"];
+
+  // Filter voices with allowed langs only
+  const filteredVoices = voices.filter(v =>
+    allowedLangs.includes(v.lang.toLowerCase())
+  );
+
+  // Find preferred Indian female voice by name (Lekha or Heera)
+  let preferredIndex = -1;
+  for (let i = 0; i < voices.length; i++) {
+    const name = voices[i].name.toLowerCase();
+    const lang = voices[i].lang.toLowerCase();
+
+    if (
+      (lang === "en-in" || lang === "hi-in") &&
+      (name.includes("lekha") || name.includes("heera"))
+    ) {
+      preferredIndex = i;
+      break;
+    }
+  }
+
+  // If no preferred Indian female voice found, pick first voice from filtered list
+  if (preferredIndex === -1 && filteredVoices.length > 0) {
+    preferredIndex = voices.indexOf(filteredVoices[0]);
+  }
+
+  // Add only filtered voices to dropdown
+  filteredVoices.forEach((voice) => {
+    const i = voices.indexOf(voice);
     const option = document.createElement("option");
-    option.value = index;
+    option.value = i;
     option.textContent = `${voice.name} (${voice.lang})${voice.default ? " — Default" : ""}`;
     voiceSelect.appendChild(option);
   });
 
-  // ✅ Set default to "Microsoft Heera"
-  let preferredIndex = voices.findIndex(v => v.name.includes("Microsoft Heera"));
-
-  // If not found, fall back to first voice
   voiceSelect.value = preferredIndex !== -1 ? preferredIndex : 0;
+
   return true;
 }
+
+speechSynthesis.onvoiceschanged = populateVoiceList;
+populateVoiceList();
+
 
 function loadVoicesWithRetry(retries = 10, delay = 200) {
   if (!populateVoiceList() && retries > 0) {
@@ -333,3 +365,14 @@ const toggle = document.getElementById('darkModeSwitch');
       localStorage.setItem('seenTutorial', 'true');
     }
   });
+
+  async function askLanguagePreference() {
+    const lang = confirm("Would you like to chat in Hindi? Click 'Cancel' for English.") ? "hi" : "en";
+  
+    await fetch("/set_language", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lang })
+    });
+  }
+  
