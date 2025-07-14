@@ -19,7 +19,7 @@ app.secret_key = "aasha-is-kind"
 
 @app.route("/")
 def home():
-    return render_template("indexnew.html")
+    return render_template("index.html")
 
 @app.route("/about")
 def about():
