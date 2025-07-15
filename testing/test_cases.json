@@ -1,0 +1,259 @@
+[
+    {
+      "input": "I feel like crying all the time",
+      "expected_emotion": "sadness",
+      "type": "emotion"
+    },
+    {
+      "input": "Everything feels hopeless",
+      "expected_emotion": "sadness",
+      "type": "emotion"
+    },
+    {
+      "input": "I'm broken and empty inside",
+      "expected_emotion": "sadness",
+      "type": "emotion"
+    },
+    {
+      "input": "Mujhe bahut dukh ho raha hai",
+      "expected_emotion": "sadness",
+      "type": "emotion"
+    },
+    {
+      "input": "Udaasi chha gayi hai zindagi mein",
+      "expected_emotion": "sadness",
+      "type": "emotion"
+    },
+    {
+      "input": "I feel numb and disconnected",
+      "expected_emotion": "sadness",
+      "type": "emotion"
+    },
+  
+    {
+      "input": "I'm so mad right now",
+      "expected_emotion": "anger",
+      "type": "emotion"
+    },
+    {
+      "input": "They really pissed me off",
+      "expected_emotion": "anger",
+      "type": "emotion"
+    },
+    {
+      "input": "I want to scream at everyone",
+      "expected_emotion": "anger",
+      "type": "emotion"
+    },
+    {
+      "input": "Mujhe itna gussa aa raha hai",
+      "expected_emotion": "anger",
+      "type": "emotion"
+    },
+    {
+      "input": "Sab pagal kar diya hai mujhe",
+      "expected_emotion": "anger",
+      "type": "emotion"
+    },
+    {
+      "input": "I hate being ignored like this",
+      "expected_emotion": "anger",
+      "type": "emotion"
+    },
+    {
+      "input": "I could punch a wall right now",
+      "expected_emotion": "anger",
+      "type": "emotion"
+    },
+    {
+      "input": "I'm terrified of failing",
+      "expected_emotion": "fear",
+      "type": "emotion"
+    },
+    {
+      "input": "My heart is racing with anxiety",
+      "expected_emotion": "fear",
+      "type": "emotion"
+    },
+    {
+      "input": "I can't breathe, I'm panicking",
+      "expected_emotion": "fear",
+      "type": "emotion"
+    },
+    {
+      "input": "Har waqt darr laga rehta hai",
+      "expected_emotion": "fear",
+      "type": "emotion"
+    },
+    {
+      "input": "I'm scared to share my feelings",
+      "expected_emotion": "fear",
+      "type": "emotion"
+    },
+    {
+      "input": "Mujhe lagta hai sab judge karenge",
+      "expected_emotion": "fear",
+      "type": "emotion"
+    },
+    {
+      "input": "I feel unsafe even at home",
+      "expected_emotion": "fear",
+      "type": "emotion"
+    },
+    {
+      "input": "I'm so happy right now",
+      "expected_emotion": "joy",
+      "type": "emotion"
+    },
+    {
+      "input": "This is the best day ever",
+      "expected_emotion": "joy",
+      "type": "emotion"
+    },
+    {
+      "input": "I feel peaceful and content",
+      "expected_emotion": "joy",
+      "type": "emotion"
+    },
+    {
+      "input": "Mujhe khushi ho rahi hai aaj",
+      "expected_emotion": "joy",
+      "type": "emotion"
+    },
+    {
+      "input": "That made me laugh out loud",
+      "expected_emotion": "joy",
+      "type": "emotion"
+    },
+    {
+      "input": "Doston ke saath ghumna bahut accha laga",
+      "expected_emotion": "joy",
+      "type": "emotion"
+    },
+    {
+      "input": "I finally finished my book",
+      "expected_emotion": "joy",
+      "type": "emotion"
+    },
+    {
+      "input": "I love you so much",
+      "expected_emotion": "love",
+      "type": "emotion"
+    },
+    {
+      "input": "I care about you deeply",
+      "expected_emotion": "love",
+      "type": "emotion"
+    },
+    {
+      "input": "You make my heart full",
+      "expected_emotion": "love",
+      "type": "emotion"
+    },
+    {
+      "input": "Mujhe tumse mohabbat ho gayi hai",
+      "expected_emotion": "love",
+      "type": "emotion"
+    },
+    {
+      "input": "Pyaar chhoti baton mein chhupa hota hai",
+      "expected_emotion": "love",
+      "type": "emotion"
+    },
+    {
+      "input": "I feel so close to you",
+      "expected_emotion": "love",
+      "type": "emotion"
+    },
+    {
+      "input": "What just happened",
+      "expected_emotion": "surprise",
+      "type": "emotion"
+    },
+    {
+      "input": "I can't believe this",
+      "expected_emotion": "surprise",
+      "type": "emotion"
+    },
+    {
+      "input": "That's totally unexpected",
+      "expected_emotion": "surprise",
+      "type": "emotion"
+    },
+    {
+      "input": "Kya yeh kaise ho gaya",
+      "expected_emotion": "surprise",
+      "type": "emotion"
+    },
+    {
+      "input": "Yeh toh socha hi nahi tha",
+      "expected_emotion": "surprise",
+      "type": "emotion"
+    },
+  
+    {
+      "input": "I'm just sitting here",
+      "expected_emotion": "neutral",
+      "type": "emotion"
+    },
+    {
+      "input": "Nothing much happening today",
+      "expected_emotion": "neutral",
+      "type": "emotion"
+    },
+    {
+      "input": "Just another normal day",
+      "expected_emotion": "neutral",
+      "type": "emotion"
+    },
+    {
+      "input": "Bas aise hi, kuch khaas nahi",
+      "expected_emotion": "neutral",
+      "type": "emotion"
+    },
+    {
+      "input": "Aaj sab kuch usual hai",
+      "expected_emotion": "neutral",
+      "type": "emotion"
+    },
+    {
+      "input": "Just meh",
+      "expected_emotion": "neutral",
+      "type": "emotion"
+    },
+    {
+      "input": "Okay bye, take care",
+      "expected_exit": true,
+      "type": "exit"
+    },
+    {
+      "input": "Thanks, I'm leaving now",
+      "expected_exit": true,
+      "type": "exit"
+    },
+    {
+      "input": "Talk to you later",
+      "expected_exit": true,
+      "type": "exit"
+    },
+    {
+      "input": "Kal baat karte hain, shubh ratri",
+      "expected_exit": true,
+      "type": "exit"
+    },
+    {
+      "input": "I just want to cry",
+      "expected_emotion": "sadness",
+      "type": "emotion"
+    },
+    {
+      "input": "Everything feels pointless",
+      "expected_emotion": "sadness",
+      "type": "emotion"
+    },
+    {
+      "input": "That's enough for now, goodnight",
+      "expected_exit": true,
+      "type": "exit"
+    }
+  ]

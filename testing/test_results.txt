@@ -1,0 +1,234 @@
+🧪 Running 51 test cases...
+
+🔹 Test 1: I feel like crying all the time
+🎯 Keyword override: sadness
+✅ Passed | Detected emotion: sadness
+
+🔹 Test 2: Everything feels hopeless
+🎯 Keyword override: sadness
+✅ Passed | Detected emotion: sadness
+
+🔹 Test 3: I'm broken and empty inside
+🎯 Keyword override: sadness
+✅ Passed | Detected emotion: sadness
+
+🔹 Test 4: Mujhe bahut dukh ho raha hai
+🎯 Keyword override: sadness
+✅ Passed | Detected emotion: sadness
+
+🔹 Test 5: Udaasi chha gayi hai zindagi mein
+🎯 Keyword override: sadness
+✅ Passed | Detected emotion: sadness
+
+🔹 Test 6: I feel numb and disconnected
+🎯 Keyword override: sadness
+✅ Passed | Detected emotion: sadness
+
+🔹 Test 7: I'm so mad right now
+🎯 Keyword override: anger
+✅ Passed | Detected emotion: anger
+
+🔹 Test 8: They really pissed me off
+🎯 Keyword override: anger
+✅ Passed | Detected emotion: anger
+
+🔹 Test 9: I want to scream at everyone
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'anger', 'score': 0.6004638671875}, {'label': 'annoyance', 'score': 0.1993710696697235}, {'label': 'neutral', 'score': 0.17778456211090088}, {'label': 'desire', 'score': 0.030246542766690254}, {'label': 'disgust', 'score': 0.023073259741067886}]
+🧠 Final emotion: anger (confidence: 0.82)
+✅ Passed | Detected emotion: anger
+
+🔹 Test 10: Mujhe itna gussa aa raha hai
+🎯 Keyword override: anger
+✅ Passed | Detected emotion: anger
+
+🔹 Test 11: Sab pagal kar diya hai mujhe
+🎯 Keyword override: anger
+✅ Passed | Detected emotion: anger
+
+🔹 Test 12: I hate being ignored like this
+🎯 Keyword override: anger
+✅ Passed | Detected emotion: anger
+
+🔹 Test 13: I could punch a wall right now
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'neutral', 'score': 0.5196922421455383}, {'label': 'anger', 'score': 0.15684100985527039}, {'label': 'annoyance', 'score': 0.09553300589323044}, {'label': 'optimism', 'score': 0.052030496299266815}, {'label': 'fear', 'score': 0.02793719246983528}]
+🧠 Final emotion: neutral (confidence: 0.52)
+❌ Failed | Expected: anger, Got: neutral
+
+🔹 Test 14: I'm terrified of failing
+🎯 Keyword override: fear
+✅ Passed | Detected emotion: fear
+🔹 Test 15: My heart is racing with anxiety
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'nervousness', 'score': 0.6085532307624817}, {'label': 'fear', 'score': 0.2764153480529785}, {'label': 'sadness', 'score': 0.10909538716077805}, {'label': 'caring', 'score': 0.07135666161775589}, {'label': 'excitement', 'score': 0.04222899302840233}]
+🧠 Final emotion: fear (confidence: 0.88)
+✅ Passed | Detected emotion: fear
+
+🔹 Test 16: I can't breathe, I'm panicking
+🎯 Keyword override: fear
+✅ Passed | Detected emotion: fear
+
+🔹 Test 17: Har waqt darr laga rehta hai
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'neutral', 'score': 0.9424612522125244}, {'label': 'approval', 'score': 0.013909094035625458}, {'label': 'amusement', 'score': 0.009580976329743862}, {'label': 'annoyance', 'score': 0.007254840340465307}, {'label': 'realization', 'score': 0.0043512973934412}]
+🧠 Final emotion: neutral (confidence: 0.96)
+❌ Failed | Expected: fear, Got: neutral
+
+🔹 Test 18: I'm scared to share my feelings
+🎯 Keyword override: fear
+✅ Passed | Detected emotion: fear
+
+🔹 Test 19: Mujhe lagta hai sab judge karenge
+🎯 Keyword override: fear
+✅ Passed | Detected emotion: fear
+
+🔹 Test 20: I feel unsafe even at home
+🎯 Keyword override: fear
+✅ Passed | Detected emotion: fear
+
+🔹 Test 21: I'm so happy right now
+🎯 Keyword override: joy
+✅ Passed | Detected emotion: joy
+
+🔹 Test 22: This is the best day ever
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'joy', 'score': 0.7580453753471375}, {'label': 'admiration', 'score': 0.35955777764320374}, {'label': 'excitement', 'score': 0.09797811508178711}, {'label': 'gratitude', 'score': 0.07011105120182037}, {'label': 'approval', 'score': 0.03357785940170288}]
+🧠 Final emotion: joy (confidence: 0.86)
+✅ Passed | Detected emotion: joy
+
+🔹 Test 23: I feel peaceful and content
+🎯 Keyword override: joy
+✅ Passed | Detected emotion: joy
+
+🔹 Test 24: Mujhe khushi ho rahi hai aaj
+🎯 Keyword override: joy
+✅ Passed | Detected emotion: joy
+
+🔹 Test 25: That made me laugh out loud
+🎯 Keyword override: joy
+✅ Passed | Detected emotion: joy
+
+🔹 Test 26: Doston ke saath ghumna bahut accha laga
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'neutral', 'score': 0.9645302295684814}, {'label': 'approval', 'score': 0.011816377751529217}, {'label': 'annoyance', 'score': 0.007626141421496868}, {'label': 'realization', 'score': 0.005527217406779528}, {'label': 'disappointment', 'score': 0.004252306651324034}]
+💖 Context override → love
+❌ Failed | Expected: joy, Got: love
+
+🔹 Test 27: I finally finished my book
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'joy', 'score': 0.45717594027519226}, {'label': 'neutral', 'score': 0.16197434067726135}, {'label': 'approval', 'score': 0.12864618003368378}, {'label': 'excitement', 'score': 0.1227288618683815}, {'label': 'relief', 'score': 0.047985825687646866}]
+🧠 Final emotion: joy (confidence: 0.63)
+✅ Passed | Detected emotion: joy
+
+🔹 Test 28: I love you so much
+🎯 Keyword override: love
+✅ Passed | Detected emotion: love
+
+🔹 Test 29: I care about you deeply
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'caring', 'score': 0.9108349084854126}, {'label': 'love', 'score': 0.07527150213718414}, {'label': 'approval', 'score': 0.05461745709180832}, {'label': 'admiration', 'score': 0.044274430721998215}, {'label': 'neutral', 'score': 0.03783610835671425}]
+🧠 Final emotion: love (confidence: 1.03)
+✅ Passed | Detected emotion: love
+
+🔹 Test 30: You make my heart full
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'love', 'score': 0.5405184626579285}, {'label': 'admiration', 'score': 0.23852793872356415}, {'label': 'caring', 'score': 0.09538958966732025}, {'label': 'approval', 'score': 0.09004298597574234}, {'label': 'neutral', 'score': 0.07974997162818909}]
+🧠 Final emotion: love (confidence: 0.87)
+✅ Passed | Detected emotion: love
+
+🔹 Test 31: Mujhe tumse mohabbat ho gayi hai
+🎯 Keyword override: love
+✅ Passed | Detected emotion: love
+
+🔹 Test 32: Pyaar chhoti baton mein chhupa hota hai
+🎯 Keyword override: love
+✅ Passed | Detected emotion: love
+
+🔹 Test 33: I feel so close to you
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'love', 'score': 0.5321449637413025}, {'label': 'caring', 'score': 0.22131527960300446}, {'label': 'neutral', 'score': 0.13472980260849}, {'label': 'approval', 'score': 0.0934869647026062}, {'label': 'sadness', 'score': 0.03643205761909485}]
+🧠 Final emotion: love (confidence: 0.75)
+✅ Passed | Detected emotion: love
+
+🔹 Test 34: What just happened
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'curiosity', 'score': 0.4644058346748352}, {'label': 'neutral', 'score': 0.3704846501350403}, {'label': 'surprise', 'score': 0.1739596575498581}, {'label': 'confusion', 'score': 0.10170513391494751}, {'label': 'excitement', 'score': 0.013439927250146866}]
+🧠 Final emotion: neutral (confidence: 0.83)
+❌ Failed | Expected: surprise, Got: neutral
+
+🔹 Test 35: I can't believe this
+🎯 Keyword override: surprise
+✅ Passed | Detected emotion: surprise
+
+🔹 Test 36: That's totally unexpected
+🎯 Keyword override: surprise
+✅ Passed | Detected emotion: surprise
+
+🔹 Test 37: Kya yeh kaise ho gaya
+🎯 Keyword override: surprise
+✅ Passed | Detected emotion: surprise
+
+🔹 Test 38: Yeh toh socha hi nahi tha
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'neutral', 'score': 0.9547958374023438}, {'label': 'approval', 'score': 0.017769742757081985}, {'label': 'annoyance', 'score': 0.00533289322629571}, {'label': 'realization', 'score': 0.004492394160479307}, {'label': 'excitement', 'score': 0.0043737879022955894}]
+🧠 Final emotion: neutral (confidence: 0.98)
+❌ Failed | Expected: surprise, Got: neutral
+
+🔹 Test 39: I'm just sitting here
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'neutral', 'score': 0.9603207111358643}, {'label': 'approval', 'score': 0.016103660687804222}, {'label': 'annoyance', 'score': 0.00962382648140192}, {'label': 'realization', 'score': 0.008687833324074745}, {'label': 'disapproval', 'score': 0.0036732156295329332}]
+🧠 Final emotion: neutral (confidence: 0.99)
+✅ Passed | Detected emotion: neutral
+
+🔹 Test 40: Nothing much happening today
+🎯 Keyword override: neutral
+✅ Passed | Detected emotion: neutral
+
+🔹 Test 41: Just another normal day
+🎯 Keyword override: neutral
+✅ Passed | Detected emotion: neutral
+
+🔹 Test 42: Bas aise hi, kuch khaas nahi
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'neutral', 'score': 0.9351514577865601}, {'label': 'approval', 'score': 0.033270299434661865}, {'label': 'annoyance', 'score': 0.006438368000090122}, {'label': 'realization', 'score': 0.005999943241477013}, {'label': 'amusement', 'score': 0.005167392548173666}]
+🧠 Final emotion: neutral (confidence: 0.97)
+✅ Passed | Detected emotion: neutral
+
+🔹 Test 43: Aaj sab kuch usual hai
+🎯 Keyword override: neutral
+✅ Passed | Detected emotion: neutral
+
+🔹 Test 44: Just meh
+🎯 Keyword override: neutral
+✅ Passed | Detected emotion: neutral
+
+🔹 Test 45: Okay bye, take care
+✅ Passed | Exit detected: True
+🔹 Test 46: Thanks, I'm leaving now
+✅ Passed | Exit detected: True
+
+🔹 Test 47: Talk to you later
+✅ Passed | Exit detected: True
+
+🔹 Test 48: Kal baat karte hain, shubh ratri
+✅ Passed | Exit detected: True
+
+🔹 Test 49: I just want to cry
+🎯 Keyword override: sadness
+✅ Passed | Detected emotion: sadness
+
+🔹 Test 50: Everything feels pointless
+✅ Using original text
+🔍 GoEmotions raw: [{'label': 'disappointment', 'score': 0.41788068413734436}, {'label': 'annoyance', 'score': 0.3700132369995117}, {'label': 'sadness', 'score': 0.11088480800390244}, {'label': 'neutral', 'score': 0.09457244724035263}, {'label': 'disapproval', 'score': 0.0649629533290863}]
+🧠 Final emotion: sadness (confidence: 0.53)
+✅ Passed | Detected emotion: sadness
+
+🔹 Test 51: That's enough for now, goodnight
+✅ Passed | Exit detected: True
+
+
+📊 Summary
+✅ Passed: 46
+❌ Failed: 5
+📈 Accuracy: 90.2%
