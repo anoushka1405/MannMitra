@@ -100,5 +100,3 @@ def clear_session():
     return resp
 
 app.run(debug=True)
-
-

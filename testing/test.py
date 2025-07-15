@@ -95,3 +95,4 @@ if failed_cases:
     with open("failed_cases.json", "w") as f_out:
         json.dump(failed_cases, f_out, indent=2)
     print("\n💾 Failed test cases saved to 'failed_cases.json'")
+

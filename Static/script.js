@@ -365,4 +365,3 @@ const toggle = document.getElementById('darkModeSwitch');
       localStorage.setItem('seenTutorial', 'true');
     }
   });
-  
