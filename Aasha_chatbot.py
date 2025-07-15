@@ -13,7 +13,8 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # Initialize Gemini model with memory
 aasha_session = genai.GenerativeModel("models/gemini-2.5-flash").start_chat(history=[])
 
-
+# Emotion classification using GoEmotions
+emotion_classifier = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions", top_k=5)
 
 # GoEmotions → Aasha categories
 GOEMOTION_TO_CORE = {
@@ -251,6 +252,7 @@ def is_negated(keyword, text):
 # emotion_classifier should also be available
 
 def get_emotion_label(text, threshold=2):
+
     if not hasattr(get_emotion_label, "model"):
         get_emotion_label.model = pipeline(
             "text-classification",
@@ -258,6 +260,7 @@ def get_emotion_label(text, threshold=2):
             top_k=5
         )
     emotion_classifier = get_emotion_label.model
+
     try:
         print(f"\n[Emotion Detection] Input: {text}")
         text_lower = text.lower()
