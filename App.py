@@ -1,17 +1,19 @@
-from flask import Flask, render_template, request, jsonify, session, make_response
+from flask import Flask, render_template, request, jsonify, session
+from flask import make_response
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
-from Aasha_chatbot import first_message, continue_convo, is_exit_intent
+from Aasha_chatbot import first_message, continue_convo, get_emotion_label, is_exit_intent
 
-# Load environment variables
+# Load env
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
 
-# Flask setup
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "aasha-is-kind")
+app.secret_key = "aasha-is-kind"
 
 @app.route("/")
 def home():
@@ -39,13 +41,12 @@ def termsofuse():
 
 @app.route("/get", methods=["POST"])
 def chat():
-    user_message = request.json.get("msg", "")
+    user_message = request.json["msg"]
 
     GROUNDING_KEYWORDS = [
         "panic", "overwhelmed", "can't breathe", "too much", "freaking out",
-        "shaking", "terrified", "dizzy", "spiraling", "suffocating",
-        "extremely sad", "extremely angry", "extremely scared",
-        "very sad", "very lost", "very angry"
+        "shaking", "terrified", "dizzy", "spiraling", "suffocating",'extremely sad','extremely angry'
+        ,'extremely scared','very sad','very lost','very angry'
     ]
 
     if any(word in user_message.lower() for word in GROUNDING_KEYWORDS):
@@ -60,24 +61,26 @@ def chat():
     exit_intent = is_exit_intent(user_message)
 
     try:
-        if not session.get("chat_started"):
+        if "chat_started" not in session:
             session["chat_started"] = True
             reply, meta = first_message(user_message)
-        elif exit_intent:
-            return jsonify({
-                "reply": "I'm really glad we talked today. Thank you for visiting <strong>Mann Mitra</strong> 💙",
-                "emotion": "neutral",
-                "exit_intent": True,
-                "celebration_type": None
-            })
         else:
-            reply, meta = continue_convo(user_message)
+            if exit_intent:
+                reply = "I'm really glad we talked today. Thank you for visiting <strong>Mann Mitra</strong> 💙"
+                return jsonify({
+                    "reply": reply,
+                    "emotion": "neutral",
+                    "exit_intent": True,
+                    "celebration_type": None
+                })
+            else:
+                reply, meta = continue_convo(user_message)
 
         return jsonify({
             "reply": reply,
-            "emotion": meta.get("emotion", "neutral"),
+            "emotion": meta["emotion"],
             "exit_intent": exit_intent,
-            "celebration_type": meta.get("celebration_type", None)
+            "celebration_type": meta["celebration_type"]
         })
 
     except Exception as e:
@@ -89,12 +92,11 @@ def chat():
             "celebration_type": None
         })
 
-@app.route("/clear_session", methods=["POST"])
+@app.route('/clear_session', methods=['POST'])
 def clear_session():
     session.clear()
-    resp = make_response("", 204)
-    resp.set_cookie("session", "", expires=0)
+    resp = make_response('', 204)
+    resp.set_cookie('session', '', expires=0)
     return resp
 
-
-
+app.run(debug=True)

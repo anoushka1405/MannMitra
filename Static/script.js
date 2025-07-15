@@ -147,7 +147,7 @@ function populateVoiceList() {
   voiceSelect.innerHTML = "";
 
   // Allowed languages (lowercase)
-  const allowedLangs = ["en-in", "hi-in", "en-us", "en-gb", "en-au"];
+  const allowedLangs = ["en-in", "en-us", "en-gb", "en-au"];
 
   // Filter voices with allowed langs only
   const filteredVoices = voices.filter(v =>
@@ -365,14 +365,4 @@ const toggle = document.getElementById('darkModeSwitch');
       localStorage.setItem('seenTutorial', 'true');
     }
   });
-
-  async function askLanguagePreference() {
-    const lang = confirm("Would you like to chat in Hindi? Click 'Cancel' for English.") ? "hi" : "en";
-  
-    await fetch("/set_language", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lang })
-    });
-  }
   
