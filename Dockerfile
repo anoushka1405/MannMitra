@@ -23,4 +23,5 @@ COPY . .
 EXPOSE 8080
 
 # Run the Flask app using Gunicorn (faster than `flask run`)
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "App:app"]
+
