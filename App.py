@@ -8,14 +8,12 @@ from Aasha_chatbot import first_message, continue_convo, get_emotion_label, is_e
 # Load env
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-#print("🔑 Google API Key loaded is:", GOOGLE_API_KEY)
 
 # Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
 
 app = Flask(__name__)
 app.secret_key = "aasha-is-kind"
-
 
 @app.route("/")
 def home():
@@ -41,21 +39,14 @@ def privacypolicy():
 def termsofuse():
     return render_template("termsofuse.html")
 
-@app.route("/set_language", methods=["POST"])
-def set_language():
-    data = request.json
-    session["lang"] = data.get("lang", "en")  # default to English
-    return jsonify({"status": "ok"})
-
-
 @app.route("/get", methods=["POST"])
 def chat():
     user_message = request.json["msg"]
-    preferred_lang = session.get("lang", "en")  # default to English if not set
 
     GROUNDING_KEYWORDS = [
         "panic", "overwhelmed", "can't breathe", "too much", "freaking out",
-        "shaking", "terrified", "dizzy", "spiraling", "suffocating"
+        "shaking", "terrified", "dizzy", "spiraling", "suffocating",'extremely sad','extremely angry'
+        ,'extremely scared','very sad','very lost','very angry'
     ]
 
     if any(word in user_message.lower() for word in GROUNDING_KEYWORDS):
@@ -72,7 +63,7 @@ def chat():
     try:
         if "chat_started" not in session:
             session["chat_started"] = True
-            reply, meta = first_message(user_message, lang=preferred_lang)
+            reply, meta = first_message(user_message)
         else:
             if exit_intent:
                 reply = "I'm really glad we talked today. Thank you for visiting <strong>Mann Mitra</strong> 💙"
@@ -83,7 +74,7 @@ def chat():
                     "celebration_type": None
                 })
             else:
-                reply, meta = continue_convo(user_message, lang=preferred_lang)
+                reply, meta = continue_convo(user_message)
 
         return jsonify({
             "reply": reply,
@@ -101,7 +92,6 @@ def chat():
             "celebration_type": None
         })
 
-
 @app.route('/clear_session', methods=['POST'])
 def clear_session():
     session.clear()
@@ -109,9 +99,6 @@ def clear_session():
     resp.set_cookie('session', '', expires=0)
     return resp
 
-if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 3000))
-    app.run(host="0.0.0.0", port=port)
+app.run(debug=True)
 
 
