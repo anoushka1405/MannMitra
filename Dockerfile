@@ -1,27 +1,32 @@
-# Use a lightweight base image with Python
+# Use a minimal Python image
 FROM python:3.10-slim
 
-# Avoid interactive prompts during install
-ENV DEBIAN_FRONTEND=noninteractive
+# Set environment variables to reduce overhead
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8080
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV PORT=8080
-
-# Create a working directory
+# Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install system dependencies (needed by some NLP libs)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy the rest of your project
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+
+# Copy your application code
 COPY . .
 
-# Expose the port your app runs on
+# Expose the port that Cloud Run will connect to
 EXPOSE 8080
 
-# Run the Flask app using Gunicorn (faster than `flask run`)
+# Run the app using Gunicorn (App.py, with instance named "app")
 CMD ["gunicorn", "-b", "0.0.0.0:8080", "App:app"]
-
