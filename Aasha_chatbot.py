@@ -13,9 +13,6 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # Initialize Gemini model with memory
 aasha_session = genai.GenerativeModel("models/gemini-2.5-flash").start_chat(history=[])
 
-# Emotion classification using GoEmotions
-emotion_classifier = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions", top_k=5)
-
 # GoEmotions → Aasha categories
 GOEMOTION_TO_CORE = {
     "admiration": "love",
