@@ -9,3 +9,4 @@ sentencepiece==0.2.0       # for translation models (like NLLB)
 python-docx==1.1.2          # for DOCX to text conversion
 reportlab==4.2.5   
 gunicorn
+tensorflow
