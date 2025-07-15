@@ -1,4 +1,8 @@
 import json
+import sys
+import os
+sys.path.append(os.path.abspath(".."))
+
 from Aasha_chatbot import (
     first_message,
     continue_convo,
@@ -7,9 +11,8 @@ from Aasha_chatbot import (
     match_faq  
 )
 
-
 # Load test cases
-with open("test_cases_57.json", "r") as f:
+with open("test_cases_51.json", "r") as f:
     test_cases = json.load(f)
 
 print(f"\n🧪 Running {len(test_cases)} test cases...\n")
@@ -33,6 +36,8 @@ for i, test in enumerate(test_cases, 1):
                 passed += 1
             else:
                 print(f"❌ Failed | Expected: {expected}, Got: {actual}")
+                test["actual_emotion"] = actual
+                failed_cases.append(test)
                 failed += 1
 
         elif test_type == "faq":
@@ -44,6 +49,8 @@ for i, test in enumerate(test_cases, 1):
                 passed += 1
             else:
                 print(f"❌ Failed | Expected FAQ: {expected}, Got: {actual}")
+                test["actual_faq"] = actual
+                failed_cases.append(test)
                 failed += 1
 
         elif test_type == "celebration":
@@ -55,6 +62,8 @@ for i, test in enumerate(test_cases, 1):
                 passed += 1
             else:
                 print(f"❌ Failed | Expected: {expected}, Got: {actual}")
+                test["actual_celebration"] = actual
+                failed_cases.append(test)
                 failed += 1
 
         elif test_type == "exit":
@@ -65,15 +74,24 @@ for i, test in enumerate(test_cases, 1):
                 passed += 1
             else:
                 print(f"❌ Failed | Expected Exit: {expected}, Got: {actual}")
+                test["actual_exit"] = actual
+                failed_cases.append(test)
                 failed += 1
 
     except Exception as e:
         print(f"❌ Error in test: {e}")
+        test["error"] = str(e)
+        failed_cases.append(test)
         failed += 1
-
 
 # 📊 Summary
 print("\n📊 Summary")
 print(f"✅ Passed: {passed}")
 print(f"❌ Failed: {failed}")
 print(f"📈 Accuracy: {round(passed / len(test_cases) * 100, 2)}%")
+
+# Save failed test cases
+if failed_cases:
+    with open("failed_cases.json", "w") as f_out:
+        json.dump(failed_cases, f_out, indent=2)
+    print("\n💾 Failed test cases saved to 'failed_cases.json'")
